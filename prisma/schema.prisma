@@ -8,8 +8,33 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    Int @id @default(autoincrement())
   email String  @unique
   name  String
   password  String
+  address String
+  phone String
+  admin Boolean @default(false)
+  workout Workout?
+  checkins Checkin[]
+}
+
+model Workout {
+  id Int  @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  seg String  @default("")
+  ter String  @default("")
+  qua String  @default("")
+  qui String  @default("")
+  sex String  @default("")
+}
+
+model Checkin {
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  timeRange String
+  vacancies Int @default(20)
+  users User[]
+  userId Int
 }
